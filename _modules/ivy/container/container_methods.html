@@ -7744,6 +7744,7 @@
     <span class="n">x2</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">ivy</span><span class="o">.</span><span class="n">Array</span><span class="p">,</span> <span class="n">ivy</span><span class="o">.</span><span class="n">NativeArray</span><span class="p">,</span> <span class="n">ivy</span><span class="o">.</span><span class="n">Container</span><span class="p">],</span>
     <span class="o">/</span><span class="p">,</span>
     <span class="o">*</span><span class="p">,</span>
+    <span class="n">modulus</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
     <span class="n">key_chains</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">to_apply</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
     <span class="n">prune_unapplied</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
@@ -7763,6 +7764,8 @@
 <span class="sd">        input array or container. Must be compatible with ``x1``</span>
 <span class="sd">        (see :ref:`broadcasting`).</span>
 <span class="sd">        Should have a real-valued data type.</span>
+<span class="sd">    modulus</span>
+<span class="sd">        whether to compute the modulus instead of the remainder. Default is True.</span>
 <span class="sd">    key_chains</span>
 <span class="sd">        The key-chains to apply or not apply the method to. Default is None.</span>
 <span class="sd">    to_apply</span>
@@ -7826,6 +7829,7 @@
     <span class="n">x2</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">ivy</span><span class="o">.</span><span class="n">Container</span><span class="p">,</span> <span class="n">ivy</span><span class="o">.</span><span class="n">Array</span><span class="p">,</span> <span class="n">ivy</span><span class="o">.</span><span class="n">NativeArray</span><span class="p">],</span>
     <span class="o">/</span><span class="p">,</span>
     <span class="o">*</span><span class="p">,</span>
+    <span class="n">modulus</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
     <span class="n">key_chains</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">to_apply</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
     <span class="n">prune_unapplied</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
@@ -7845,6 +7849,8 @@
 <span class="sd">        input array or container. Must be compatible with ``self``</span>
 <span class="sd">        (see :ref:`broadcasting`).</span>
 <span class="sd">        Should have a real-valued data type.</span>
+<span class="sd">    modulus</span>
+<span class="sd">        whether to compute the modulus instead of the remainder. Default is True.</span>
 <span class="sd">    key_chains</span>
 <span class="sd">        The key-chains to apply or not apply the method to. Default is None.</span>
 <span class="sd">    to_apply</span>
@@ -12045,11 +12051,7 @@
 <span class="sd">    &gt;&gt;&gt; b = ivy.randint(0, 255, shape=(1, 128, 128, 3)).astype(ivy.float32) / 255.0</span>
 <span class="sd">    &gt;&gt;&gt; inp = ivy.Container(a=a, b=b)</span>
 <span class="sd">    &gt;&gt;&gt; filters = ivy.random_normal(mean=0, std=1, shape=[3, 3, 3])</span>
-<span class="sd">    &gt;&gt;&gt; y = ivy.Container.static_depthwise_conv2d( \</span>
-<span class="sd">                                                inp, \</span>
-<span class="sd">                                                filters, \</span>
-<span class="sd">                                                strides=2, \</span>
-<span class="sd">                                                padding=&#39;SAME&#39;)</span>
+<span class="sd">    &gt;&gt;&gt; y = ivy.Container.static_depthwise_conv2d(inp, filters, 2, &#39;SAME&#39;)</span>
 <span class="sd">    &gt;&gt;&gt; print(y.shape)</span>
 <span class="sd">    [1, 64, 64, 3]</span>
 <span class="sd">    &quot;&quot;&quot;</span>
